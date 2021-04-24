@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { Login, MainPage, Reports, UserProfile } from '../../pages';
+import { Login, MainPage, Reports, UserProfile, Employees } from '../../pages';
 import NotFound from '../../pages/Error/NotFound';
 import {
   MailOutlined,
@@ -12,6 +12,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
+
 const { Header, Content, Footer, Sider } = Layout;
 
 const BaseLayout = () => {
@@ -38,6 +39,10 @@ const BaseLayout = () => {
               <span>Отчеты</span>
               <Link to="/reports" />
             </Menu.Item>
+            <Menu.Item key="5" icon={<MailOutlined />}>
+              <span>Сотрудники</span>
+              <Link to="/employees" />
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -56,6 +61,7 @@ const BaseLayout = () => {
               <Route path="/mainPage" component={MainPage} />
               <Route path="/reports" component={Reports} />
               <Route path="/userProfile" component={UserProfile} />
+              <Route path="/employees" component={Employees} />
               <Route exact={true} path="*" component={NotFound} />
             </Switch>
           </Content>
