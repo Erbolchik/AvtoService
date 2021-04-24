@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { Login, MainPage, Reports, UserProfile } from '../../pages';
 import NotFound from '../../pages/Error/NotFound';
@@ -9,6 +9,8 @@ import {
   AppstoreOutlined,
   SettingOutlined,
   LinkOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from '@ant-design/icons';
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -39,14 +41,23 @@ const BaseLayout = () => {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0, paddingLeft: 16 }}>Страница</Header>
+          <Header style={{ background: '#fff', padding: 0, paddingLeft: 16 }}>
+            {collapsed ? (
+              <MenuFoldOutlined onClick={() => setCollapsed(!collapsed)} />
+            ) : (
+              <MenuUnfoldOutlined onClick={() => setCollapsed(!collapsed)} />
+            )}
+            <span style={{ marginLeft: 50 }}>Автосервис у Ербола</span>
+          </Header>
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-            <Route exact={true} path="/" component={MainPage} />
-            <Route path="/login" component={Login} />
-            <Route path="/mainPage" component={MainPage} />
-            <Route path="/reports" component={Reports} />
-            <Route path="/userProfile" component={UserProfile} />
-            <Route exact={true} path="*" component={NotFound} />
+            <Switch>
+              <Route exact={true} path="/" component={MainPage} />
+              <Route path="/login" component={Login} />
+              <Route path="/mainPage" component={MainPage} />
+              <Route path="/reports" component={Reports} />
+              <Route path="/userProfile" component={UserProfile} />
+              <Route exact={true} path="*" component={NotFound} />
+            </Switch>
           </Content>
           <Footer style={{ textAlign: 'center' }}>Сатыбалдин Ербол 2021</Footer>
         </Layout>
