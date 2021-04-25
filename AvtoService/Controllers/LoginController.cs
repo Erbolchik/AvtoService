@@ -7,5 +7,7 @@ namespace AvtoService.Controllers
 {
     public class LoginController
     {
+
     }
 }
+        

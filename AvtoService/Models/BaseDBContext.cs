@@ -12,6 +12,10 @@ namespace AvtoService.Models
         {
 
         }
+
         public DbSet<Employees> Employees { get; set; }
+
+        public DbSet<Clients> Clients { get; set; }
+
     }
 }

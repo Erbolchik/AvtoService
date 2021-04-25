@@ -1,0 +1,34 @@
+.site-page-header {
+    border: 1px solid rgb(235, 237, 240) !important; 
+    border-top-width: 0 !important;
+  }
+  .segment{
+    border: 1px solid rgb(235, 237, 240) !important;
+    box-shadow: none !important;
+  }
+  #components-layout-demo-top-side .logo {
+    float: left !important;
+    width: 120px !important;
+    height: 31px !important;
+    margin: 16px 24px 16px 0 !important;
+    background: rgba(255, 255, 255, 0.3) !important;
+  }
+  
+  .ant-row-rtl #components-layout-demo-top-side .logo {
+    float: right !important;
+    margin: 16px 0 16px 24px !important;
+  }
+  
+  .site-layout-background {
+    background: #fff !important;
+  }
+  .ant-page-header, .ant-page-header-heading-title, .ant-page-header-heading-sub-title{
+    color:white !important;
+  }
+
+  .ant-page-header-heading-extra a{
+    color:white !important;
+  }
+  .ant-page-header-back span{
+    color:white !important;
+  }

@@ -12,3 +12,9 @@ export const getEmployees = () => {
   return instance().get('/api/Employees');
 };
 //#endregion
+
+//#region Employees
+export const getClients = () => {
+  return instance().get('/api/Clients');
+};
+//#endregion
