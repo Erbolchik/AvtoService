@@ -22,5 +22,20 @@ namespace AvtoService.Controllers
         {
             return _dbContext.Employees.ToList();
         }
+
+        [HttpPost]
+        public IActionResult SaveEmployees([FromBody] Employees employees)
+        {
+            try
+            {
+                _dbContext.Employees.Add(employees);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

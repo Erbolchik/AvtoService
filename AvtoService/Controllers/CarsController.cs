@@ -10,27 +10,27 @@ namespace AvtoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
+    public class CarsController : ControllerBase
     {
         private BaseDBContext _dbContext;
 
-        public ClientsController(BaseDBContext dbContext)
+        public CarsController(BaseDBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         [HttpGet]
-        public IEnumerable<Clients> GetClients()
+        public IEnumerable<Cars> GetCars()
         {
-            return _dbContext.Clients.ToList();
+            return _dbContext.Cars.ToList();
         }
 
         [HttpPost]
-        public IActionResult SaveClients([FromBody] Clients clients)
+        public IActionResult CreateCars(Cars cars)
         {
             try
             {
-                _dbContext.Clients.Add(clients);
+                _dbContext.Cars.Add(cars);
                 _dbContext.SaveChanges();
                 return Ok();
             }
@@ -39,6 +39,5 @@ namespace AvtoService.Controllers
                 return BadRequest(ex);
             }
         }
-
     }
 }

@@ -10,27 +10,26 @@ namespace AvtoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
+    public class TypeOfWorkController : ControllerBase
     {
         private BaseDBContext _dbContext;
-
-        public ClientsController(BaseDBContext dbContext)
+        public TypeOfWorkController(BaseDBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         [HttpGet]
-        public IEnumerable<Clients> GetClients()
+        public IEnumerable<TypeOfWork> GetTypeOfWorks()
         {
-            return _dbContext.Clients.ToList();
+            return _dbContext.TypeOfWork.ToList();
         }
 
         [HttpPost]
-        public IActionResult SaveClients([FromBody] Clients clients)
+        public IActionResult SaveTypeOfWorks([FromBody] TypeOfWork typeOfWork)
         {
             try
             {
-                _dbContext.Clients.Add(clients);
+                _dbContext.TypeOfWork.Add(typeOfWork);
                 _dbContext.SaveChanges();
                 return Ok();
             }
@@ -39,6 +38,5 @@ namespace AvtoService.Controllers
                 return BadRequest(ex);
             }
         }
-
     }
 }

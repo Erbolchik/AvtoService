@@ -10,27 +10,26 @@ namespace AvtoService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientsController : ControllerBase
+    public class RepairOrdersController : ControllerBase
     {
         private BaseDBContext _dbContext;
-
-        public ClientsController(BaseDBContext dbContext)
+        public RepairOrdersController(BaseDBContext dbContext)
         {
             _dbContext = dbContext;
         }
 
         [HttpGet]
-        public IEnumerable<Clients> GetClients()
+        public IEnumerable<RepairOrders> GetRepairOrders()
         {
-            return _dbContext.Clients.ToList();
+            return _dbContext.RepairOrders.ToList();
         }
 
         [HttpPost]
-        public IActionResult SaveClients([FromBody] Clients clients)
+        public IActionResult SaveRepairOrders([FromBody] RepairOrders repairOrders)
         {
             try
             {
-                _dbContext.Clients.Add(clients);
+                _dbContext.RepairOrders.Add(repairOrders);
                 _dbContext.SaveChanges();
                 return Ok();
             }
@@ -39,6 +38,5 @@ namespace AvtoService.Controllers
                 return BadRequest(ex);
             }
         }
-
     }
 }
