@@ -1,6 +1,7 @@
 ﻿using AvtoService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace AvtoService.Controllers
         [HttpGet]
         public IEnumerable<Clients> GetClients()
         {
-            return _dbContext.Clients.ToList();
+            return _dbContext.Clients.Include(c=>c.Cars).ToList();
         }
 
         [HttpPost]

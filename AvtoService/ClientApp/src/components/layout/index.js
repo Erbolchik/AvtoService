@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import { Layout, Menu, PageHeader } from 'antd';
-import { Login, MainPage, Reports, UserProfile, Employees, Clients } from '../../pages';
+import { Login, MainPage, Reports, UserProfile, Employees, Clients, Cars } from '../../pages';
 import NotFound from '../../pages/Error/NotFound';
 import {
   MailOutlined,
@@ -31,7 +31,7 @@ const BaseLayout = () => {
             </Menu.Item>
             <Menu.Item key="2" icon={<CarOutlined />}>
               <span>Автомобили</span>
-              <Link to="/mainPage" />
+              <Link to="/cars" />
             </Menu.Item>
             <Menu.Item key="3" icon={<MailOutlined />}>
               <span>Login</span>
@@ -59,7 +59,7 @@ const BaseLayout = () => {
             <Switch>
               <Route exact={true} path="/" component={MainPage} />
               <Route path="/login" component={Login} />
-              <Route path="/mainPage" component={MainPage} />
+              <Route path="/cars" component={Cars} />
               <Route path="/reports" component={Reports} />
               <Route path="/userProfile" component={UserProfile} />
               <Route path="/employees" component={Employees} />

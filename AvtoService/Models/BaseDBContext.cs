@@ -13,6 +13,14 @@ namespace AvtoService.Models
 
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Cars>()
+                .HasOne(s => s.Clients)
+                .WithMany(c => c.Cars)
+                .HasForeignKey(c => c.ClientId);
+        }
+
         public DbSet<Employees> Employees { get; set; }
 
         public DbSet<Clients> Clients { get; set; }
@@ -26,6 +34,5 @@ namespace AvtoService.Models
         public DbSet<RepairOrders> RepairOrders { get; set; }
 
         public DbSet<EmployeesWorks> EmployeesWorks { get; set; }
-
     }
 }

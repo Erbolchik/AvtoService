@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,5 +19,8 @@ namespace AvtoService.Models
         public DateTime YearOfIssue { get; set; }
 
         public string Model { get; set; }
+
+        [NotMapped]
+        public Clients Clients { get; set; }
     }
 }

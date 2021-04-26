@@ -22,14 +22,27 @@ namespace AvtoService
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllersWithViews();
-
+            IMvcBuilder builder = services.AddControllersWithViews()
+               .AddNewtonsoftJson(options =>
+                   options.SerializerSettings.ReferenceLoopHandling =
+                   Newtonsoft.Json.ReferenceLoopHandling.Ignore
+               );
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BaseDBContext>(options => options.UseNpgsql(connection));
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/build";
+            });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                       .AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials()
+                       .Build());
             });
         }
 
