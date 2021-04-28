@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, message, Form, Input, Select } from 'antd';
-import { saveEmployees } from '../../api';
+import { saveCar, saveEmployees } from '../../api';
 
-export function EmployeeModal({ modalProps, closeModal }) {
-  const { actionType, visible, currentEmployee } = modalProps;
+export function CarsModal({ modalProps, closeModal }) {
+  const { actionType, visible, currentCars } = modalProps;
   const [form] = Form.useForm();
   const modalTitle =
     actionType === 'save' ? 'Создание сотрудника' : 'Редактирование данных сотрудника школы';
@@ -18,11 +18,11 @@ export function EmployeeModal({ modalProps, closeModal }) {
   };
 
   useEffect(() => {
-    actionType == 'edit' && form.setFieldsValue(currentEmployee);
-  }, [actionType, currentEmployee, form]);
+    actionType == 'edit' && form.setFieldsValue(currentCars);
+  }, [actionType, currentCars, form]);
 
-  const onSaveEmployee = () => {
-    saveEmployees(form.getFieldsValue()).then(() => {
+  const onSaveCars = () => {
+    saveCar(form.getFieldsValue()).then(() => {
       message.success('Успешно добавлено', { duration: 2 });
       closeModal();
     });
@@ -32,7 +32,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
     <Modal
       title={modalTitle}
       visible={visible}
-      onOk={onSaveEmployee}
+      onOk={onSaveCars}
       onCancel={() => closeModal()}
       okText="Сохранить"
       cancelText="Отменить"
@@ -43,7 +43,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
-        initialValues={actionType == 'edit' ? currentEmployee : initialState}>
+        initialValues={actionType == 'edit' ? currentCars : initialState}>
         <Form.Item
           label={'Фамилия'}
           name="lastName"
