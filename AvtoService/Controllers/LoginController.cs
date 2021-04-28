@@ -1,13 +1,33 @@
-﻿using System;
+﻿using AvtoService.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace AvtoService.Controllers
 {
-    public class LoginController
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LoginController : ControllerBase
     {
+        private readonly BaseDBContext _dbContext;
+
+        public LoginController(BaseDBContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
+        public IActionResult Login()
+        {
+            return Ok();
+        }
+
+        public IActionResult LogOut()
+        {
+            return Ok();
+        }
 
     }
 }
-        
