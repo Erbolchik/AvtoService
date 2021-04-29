@@ -1,4 +1,5 @@
 using AvtoService.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System;
 
 namespace AvtoService
 {
@@ -44,9 +47,32 @@ namespace AvtoService
                        .AllowCredentials()
                        .Build());
             });
+
+            services.Configure<AuthOptions>(Configuration.GetSection("Auth"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+        private static void ConfigureAuth(IServiceCollection services)
+        {
+            AuthOptions options = Configuration.GetSection("Auth").Get<AuthOptions>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(cfg =>
+            {
+                cfg.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = options.Issuer,
+                    ValidAudience = options.Audience,
+                    ClockSkew = TimeSpan.Zero,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                            options.GetSignInKeyBytes())
+                };
+            });
+
+        }
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
