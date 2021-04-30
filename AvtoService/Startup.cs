@@ -49,10 +49,12 @@ namespace AvtoService
             });
 
             services.Configure<AuthOptions>(Configuration.GetSection("Auth"));
+            ConfigureAuth(services);
+
         }
 
 
-        private static void ConfigureAuth(IServiceCollection services)
+        private void ConfigureAuth(IServiceCollection services)
         {
             AuthOptions options = Configuration.GetSection("Auth").Get<AuthOptions>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(cfg =>

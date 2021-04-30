@@ -1,5 +1,6 @@
 ﻿using AvtoService.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ using System.Text;
 
 namespace AvtoService.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
@@ -19,16 +19,18 @@ namespace AvtoService.Controllers
         private readonly AuthOptions _options;
 
         public LoginController(BaseDBContext dbContext,
-                               AuthOptions options)
+                               IOptions<AuthOptions> options)
         {
             _dbContext = dbContext;
-            _options = options;
+            _options = options.Value;
         }
 
-        [HttpPost("/login")]
-        public IActionResult Login([FromBody] object obj)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] SomeExample user)
         {
-            return Ok();
+            string token = CreateToken(GetClaims(user));
+            return Ok(token);
+
         }
 
         private string CreateToken(IEnumerable<Claim> claims)
@@ -67,14 +69,10 @@ namespace AvtoService.Controllers
 
         private static Claim[] GetClaims(SomeExample user)
         {
-            return user.UserHasRoles
-                .Select(e => new Claim(ClaimTypes.Role, e.Role.Name))
-                .Concat(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Name, user.Name)
-                })
-                .ToArray();
+
+            return new[] {
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Name, user.Name)};
         }
     }
 }
