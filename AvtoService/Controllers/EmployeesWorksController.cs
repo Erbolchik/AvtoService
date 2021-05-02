@@ -1,10 +1,8 @@
 ﻿using AvtoService.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AvtoService.Controllers
 {
@@ -25,11 +23,42 @@ namespace AvtoService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveEmployeeWorks([FromBody] EmployeesWorks employeesWorks)
+        public IActionResult SaveEmployeeWork([FromBody] EmployeesWorks employeesWorks)
         {
             try
             {
                 _dbContext.EmployeesWorks.Add(employeesWorks);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEmployeeWork(int employeeWorkId)
+        {
+            try
+            {
+                var employeesWork = _dbContext.EmployeesWorks.SingleOrDefault(c => c.Id == employeeWorkId);
+                _dbContext.EmployeesWorks.Remove(employeesWork);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateEmployeeWork(EmployeesWorks employeesWork)
+        {
+            try
+            {
+                _dbContext.EmployeesWorks.Update(employeesWork);
                 _dbContext.SaveChanges();
                 return Ok();
             }

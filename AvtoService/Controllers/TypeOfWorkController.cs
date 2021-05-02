@@ -38,5 +38,36 @@ namespace AvtoService.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteTypeOfWork(int typeOfWorkId)
+        {
+            try
+            {
+                var typeOfWork = _dbContext.TypeOfWork.SingleOrDefault(c => c.Id == typeOfWorkId);
+                _dbContext.TypeOfWork.Remove(typeOfWork);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateTypeOfWork(TypeOfWork typeOfWork)
+        {
+            try
+            {
+                _dbContext.TypeOfWork.Update(typeOfWork);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

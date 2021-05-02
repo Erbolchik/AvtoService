@@ -39,5 +39,36 @@ namespace AvtoService.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCommentsForOrder(int commentId)
+        {
+            try
+            {
+                var commentForOrder = _dbContext.CommentsForOrder.SingleOrDefault(c => c.Id == commentId);
+                _dbContext.CommentsForOrder.Remove(commentForOrder);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateCommentsForOrder(CommentsForOrder commentForOrder)
+        {
+            try
+            {
+                _dbContext.CommentsForOrder.Update(commentForOrder);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

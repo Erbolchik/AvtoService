@@ -25,11 +25,42 @@ namespace AvtoService.Controllers
         }
 
         [HttpPost]
-        public IActionResult SaveRepairOrders([FromBody] RepairOrders repairOrders)
+        public IActionResult SaveRepairOrder([FromBody] RepairOrders repairOrders)
         {
             try
             {
                 _dbContext.RepairOrders.Add(repairOrders);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteRepairOrder(int repairOrderId)
+        {
+            try
+            {
+                var repairOrder = _dbContext.RepairOrders.SingleOrDefault(c => c.Id == repairOrderId);
+                _dbContext.RepairOrders.Remove(repairOrder);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateRepairOrder(RepairOrders repairOrder)
+        {
+            try
+            {
+                _dbContext.RepairOrders.Update(repairOrder);
                 _dbContext.SaveChanges();
                 return Ok();
             }
