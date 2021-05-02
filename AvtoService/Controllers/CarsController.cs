@@ -27,11 +27,42 @@ namespace AvtoService.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCars(Cars cars)
+        public IActionResult CreateCar(Cars cars)
         {
             try
             {
                 _dbContext.Cars.Add(cars);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteCar(int carId)
+        {
+            try
+            {
+                var car = _dbContext.Cars.SingleOrDefault(car => car.Id == carId);
+                _dbContext.Cars.Remove(car);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateCar(Cars updatedCar)
+        {
+            try
+            {
+                _dbContext.Cars.Update(updatedCar);
                 _dbContext.SaveChanges();
                 return Ok();
             }

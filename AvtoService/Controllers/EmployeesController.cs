@@ -37,5 +37,36 @@ namespace AvtoService.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClient(int clientId)
+        {
+            try
+            {
+                var client = _dbContext.Clients.SingleOrDefault(c => c.Id == clientId);
+                _dbContext.Clients.Remove(client);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateEmployee(Clients updatedClient)
+        {
+            try
+            {
+                _dbContext.Clients.Update(updatedClient);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }

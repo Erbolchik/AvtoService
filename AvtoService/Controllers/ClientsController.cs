@@ -23,11 +23,11 @@ namespace AvtoService.Controllers
         [HttpGet]
         public IEnumerable<Clients> GetClients()
         {
-            return _dbContext.Clients.Include(c=>c.Cars).ToList();
+            return _dbContext.Clients.Include(c => c.Cars).ToList();
         }
 
         [HttpPost]
-        public IActionResult SaveClients([FromBody] Clients clients)
+        public IActionResult SaveClient([FromBody] Clients clients)
         {
             try
             {
@@ -41,5 +41,35 @@ namespace AvtoService.Controllers
             }
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClient(int clientId)
+        {
+            try
+            {
+                var client = _dbContext.Clients.SingleOrDefault(c => c.Id == clientId);
+                _dbContext.Clients.Remove(client);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPut]
+        public IActionResult UpdateClient(Clients updatedClient)
+        {
+            try
+            {
+                _dbContext.Clients.Update(updatedClient);
+                _dbContext.SaveChanges();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }
