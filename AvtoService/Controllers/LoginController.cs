@@ -69,10 +69,11 @@ namespace AvtoService.Controllers
 
         private static Claim[] GetClaims(SomeExample user)
         {
-
             return new[] {
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Name, user.Name)};
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Email),
+                new Claim(ClaimTypes.NameIdentifier, user.Login)};
         }
     }
 }
