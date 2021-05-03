@@ -5,5 +5,17 @@ import MainPage from './MainPage';
 import Employees from './Employee';
 import Clients from './Clients';
 import Cars from './Cars';
+import OrderRepair from './OrderRepair';
+import ServiceSpending from './ServiceSpending';
 
-export { Login, UserProfile, Reports, MainPage, Employees, Clients, Cars };
+export {
+  Login,
+  UserProfile,
+  Reports,
+  MainPage,
+  Employees,
+  Clients,
+  Cars,
+  OrderRepair,
+  ServiceSpending,
+};
