@@ -34,5 +34,7 @@ namespace AvtoService.Models
         public DbSet<RepairOrders> RepairOrders { get; set; }
 
         public DbSet<EmployeesWorks> EmployeesWorks { get; set; }
+
+        public DbSet<ServiceSpending> ServiceSpendings { get; set; }
     }
 }

@@ -36,3 +36,21 @@ export const saveCar = (data) => {
   return instance().post('/api/Cars', data);
 };
 //#endregion
+
+//#region Service spending
+export const getServiceSpending = () => {
+  return instance().get('/api/ServiceSpending');
+};
+
+export const saveServiceSpending = (data) => {
+  return instance().post('/api/ServiceSpending', data);
+};
+
+export const updateServiceSpending = (data) => {
+  return instance().put('/api/ServiceSpending', data);
+};
+
+export const deleteServiceSpending = (id) => {
+  return instance().delete(`/api/ServiceSpending/${id}`);
+};
+//#endregion
