@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getServiceSpending } from '../../api';
+import { deleteServiceSpending, getServiceSpending } from '../../api';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { ServiceSpendingModal } from './ServiceSpendingModal';
@@ -12,11 +12,12 @@ function ServiceSpending() {
     actionType: null,
     currentServiceSpending: null,
   });
+
   useEffect(() => {
     getServiceSpending().then(({ data }) => {
       setServiceSpending(data);
     });
-  }, []);
+  }, [modalProps]);
 
   const columns = [
     {
@@ -70,7 +71,7 @@ function ServiceSpending() {
           <Popconfirm
             placement="bottom"
             title={'Вы точно хотите удалить ?'}
-            // onConfirm={() => confirm(id)}
+            onConfirm={() => confirm(id)}
             okText={'Да'}
             cancelText={'Нет'}>
             <DeleteTwoTone key="delete" twoToneColor="#eb2f96" />
@@ -79,6 +80,11 @@ function ServiceSpending() {
       ),
     },
   ];
+
+  const confirm = (id) => {
+    deleteServiceSpending(id);
+    setModalProps({ visible: false, actionType: null, currentServiceSpending: null });
+  };
 
   function closeModal() {
     return setModalProps({ visible: false });

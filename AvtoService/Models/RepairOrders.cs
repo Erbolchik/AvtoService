@@ -20,5 +20,7 @@ namespace AvtoService.Models
         public double TheAmountsOfWorks { get; set; }
 
         public bool IsPaidUp { get; set; }
+
+        public Cars Cars { get; set; }
     }
 }

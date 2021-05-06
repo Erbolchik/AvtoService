@@ -22,5 +22,9 @@ namespace AvtoService.Models
 
         [NotMapped]
         public Clients Clients { get; set; }
+
+        [NotMapped]
+        public List<RepairOrders> RepairOrders { get; set; }
+
     }
 }

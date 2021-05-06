@@ -23,7 +23,7 @@ namespace AvtoService.Controllers
         [HttpGet]
         public IEnumerable<Clients> GetClients()
         {
-            return _dbContext.Clients.Include(c => c.Cars).ToList();
+            return _dbContext.Clients.Include(c => c.Cars).ThenInclude(t=>t.).ToList();
         }
 
         [HttpPost]

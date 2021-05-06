@@ -1,29 +1,42 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Modal, message, Form, Input, Select } from 'antd';
-import { saveCar, saveEmployees } from '../../api';
+import React, { useEffect } from 'react';
+import { Modal, message, Form, Input, DatePicker } from 'antd';
+import { saveServiceSpending, updateServiceSpending } from '../../api';
 import TextArea from 'antd/lib/input/TextArea';
+import moment from 'moment';
 
 export function ServiceSpendingModal({ modalProps, closeModal }) {
   const { actionType, visible, currentServiceSpending } = modalProps;
   const [form] = Form.useForm();
+  const dateFormat = 'DD/MM/YYYY';
+  console.log(currentServiceSpending);
   const modalTitle =
     actionType === 'save' ? 'Создание записи о затрате' : 'Редактирование записи о затрате';
   const requiredMessage = 'Это поле является обязательным';
   const initialState = {
-    lastName: '',
-    firstName: '',
-    middleName: '',
-    phone: '',
-    login: '',
-    email: '',
+    date: null,
+    name: '',
+    price: null,
   };
 
   useEffect(() => {
-    actionType == 'edit' && form.setFieldsValue(currentServiceSpending);
+    actionType == 'edit' &&
+      form.setFieldsValue({
+        date: null,
+        name: currentServiceSpending.name,
+        price: currentServiceSpending.price,
+        id: currentServiceSpending.id,
+      });
   }, [actionType, currentServiceSpending, form]);
 
-  const onSaveCars = () => {
-    saveCar(form.getFieldsValue()).then(() => {
+  const onSaveServiceSpending = () => {
+    saveServiceSpending(form.getFieldsValue()).then(() => {
+      message.success('Успешно добавлено', { duration: 2 });
+      closeModal();
+    });
+  };
+
+  const onUpdateServiceSpending = () => {
+    updateServiceSpending(form.getFieldsValue()).then(() => {
       message.success('Успешно добавлено', { duration: 2 });
       closeModal();
     });
@@ -33,7 +46,7 @@ export function ServiceSpendingModal({ modalProps, closeModal }) {
     <Modal
       title={modalTitle}
       visible={visible}
-      onOk={onSaveCars}
+      onOk={actionType == 'edit' ? onUpdateServiceSpending : onSaveServiceSpending}
       onCancel={() => closeModal()}
       okText="Сохранить"
       cancelText="Отменить"
@@ -45,11 +58,14 @@ export function ServiceSpendingModal({ modalProps, closeModal }) {
         wrapperCol={{ span: 14 }}
         layout="horizontal"
         initialValues={actionType == 'edit' ? currentServiceSpending : initialState}>
+        <Form.Item name="id" style={{ display: 'none' }}>
+          <Input type={'hidden'} />
+        </Form.Item>
         <Form.Item
           label={'Дата'}
           name="date"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Фамилия'} />
+          <DatePicker placeholder="Дата" style={{ width: 250 }} format={dateFormat} />
         </Form.Item>
         <Form.Item
           label={'Статья расходов'}
