@@ -1,10 +1,15 @@
-import { Table } from 'antd';
+import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { getClients } from '../../api';
+import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 
 function Clients() {
   const [clients, setClients] = useState();
-
+  const [modalProps, setModalProps] = useState({
+    visible: false,
+    actionType: null,
+    currentClients: null,
+  });
   useEffect(() => {
     getClients().then(({ data }) => setClients(data));
   }, []);
@@ -41,12 +46,62 @@ function Clients() {
       key: 'email',
     },
     {
-      title: `Действия `,
+      title: `Действие`,
       key: 'action',
-      width: 100,
+      width: 150,
       fixed: 'right',
+      align: 'center',
+      render: ({ id }) => (
+        <Tooltip placement="top" title={'Редактирование'}>
+          <EditTwoTone
+            key="edit"
+            onClick={() => {
+              setModalProps({
+                visible: !modalProps.visible,
+                actionType: 'edit',
+                currentClients: clients && clients.find((el) => el.id === id),
+              });
+            }}
+          />
+        </Tooltip>
+      ),
+    },
+    {
+      title: `Действие`,
+      key: 'action',
+      width: 250,
+      fixed: 'right',
+      align: 'center',
+      render: ({ id }) => (
+        <Tooltip placement="top" title={'Удалить'}>
+          <Popconfirm
+            placement="bottom"
+            title={'Вы точно хотите удалить ?'}
+            // onConfirm={() => confirm(id)}
+            okText={'Да'}
+            cancelText={'Нет'}>
+            <DeleteTwoTone key="delete" twoToneColor="#eb2f96" />
+          </Popconfirm>
+        </Tooltip>
+      ),
     },
   ];
+
+  function closeModal() {
+    return setModalProps({ visible: false });
+  }
+
+  function TableFotter() {
+    return (
+      <Button
+        type="primary"
+        size="large"
+        onClick={() => setModalProps({ visible: !modalProps.visible, actionType: 'save' })}>
+        Добавить
+      </Button>
+    );
+  }
+
   return (
     <Table
       style={{ marginTop: 24 }}
