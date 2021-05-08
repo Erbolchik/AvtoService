@@ -2,6 +2,7 @@ import { Button, Popconfirm, Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { getClients } from '../../api';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
+import { ClientsModal } from './ClientsModal';
 
 function Clients() {
   const [clients, setClients] = useState();
@@ -103,13 +104,17 @@ function Clients() {
   }
 
   return (
-    <Table
-      style={{ marginTop: 24 }}
-      scroll={{ x: 1300 }}
-      columns={columns}
-      dataSource={clients}
-      rowKey="id"
-    />
+    <React.Fragment>
+      <ClientsModal modalProps={modalProps} closeModal={closeModal} />
+      <Table
+        style={{ marginTop: 24 }}
+        scroll={{ x: 1300 }}
+        columns={columns}
+        dataSource={clients}
+        rowKey="id"
+        footer={TableFotter}
+      />
+    </React.Fragment>
   );
 }
 

@@ -1,12 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, message, Form, Input, Select } from 'antd';
-import { saveEmployees } from '../../api';
+import { saveEmployees, saveClient } from '../../api';
 
-export function EmployeeModal({ modalProps, closeModal }) {
-  const { actionType, visible, currentEmployee } = modalProps;
+export function ClientsModal({ modalProps, closeModal }) {
+  const { actionType, visible, currentClients } = modalProps;
   const [form] = Form.useForm();
-  const modalTitle =
-    actionType === 'save' ? 'Создание сотрудника' : 'Редактирование данных сотрудника';
+  const modalTitle = actionType === 'save' ? 'Создание клиента' : 'Редактирование данных клиента';
   const requiredMessage = 'Это поле является обязательным';
   const initialState = {
     lastName: '',
@@ -18,11 +17,11 @@ export function EmployeeModal({ modalProps, closeModal }) {
   };
 
   useEffect(() => {
-    actionType == 'edit' && form.setFieldsValue(currentEmployee);
-  }, [actionType, currentEmployee, form]);
+    actionType == 'edit' && form.setFieldsValue(currentClients);
+  }, [actionType, currentClients, form]);
 
-  const onSaveEmployee = () => {
-    saveEmployees(form.getFieldsValue()).then(() => {
+  const onSaveClient = () => {
+    saveClient(form.getFieldsValue()).then(() => {
       message.success('Успешно добавлено', { duration: 2 });
       closeModal();
     });
@@ -32,7 +31,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
     <Modal
       title={modalTitle}
       visible={visible}
-      onOk={onSaveEmployee}
+      onOk={onSaveClient}
       onCancel={() => closeModal()}
       okText="Сохранить"
       cancelText="Отменить"
@@ -43,7 +42,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 14 }}
         layout="horizontal"
-        initialValues={actionType == 'edit' ? currentEmployee : initialState}>
+        initialValues={actionType == 'edit' ? currentClients : initialState}>
         <Form.Item
           label={'Фамилия'}
           name="lastName"
