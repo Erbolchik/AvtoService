@@ -79,9 +79,6 @@ function OrderRepair() {
   return (
     <div>
       <Row>
-        <Col span={6} order={4}>
-          1 col-order-4
-        </Col>
         <Col span={6} order={3}>
           <Table columns={orderRepairColumns}></Table>
         </Col>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, message, Form, Input, Select } from 'antd';
-import { saveEmployees, saveClient } from '../../api';
+import { saveClient } from '../../api';
 
 export function ClientsModal({ modalProps, closeModal }) {
   const { actionType, visible, currentClients } = modalProps;
