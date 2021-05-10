@@ -14,7 +14,7 @@ namespace AvtoService.Models
         public string Email { get; set; }
         public DateTime RegistrationDate { get; set; }
 
-        //public virtual IList<UserRoles> UserRoles { get; set; } = new List<UserRoles>();
+        public virtual IList<UserRoles> UserRoles { get; set; } = new List<UserRoles>();
         public Clients Clients { get; set; }
         public Employees Employees { get; set; }
     }

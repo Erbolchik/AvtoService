@@ -10,6 +10,8 @@ namespace AvtoService.Models
     {
         public Users Users { get; set; }
 
+        public int? UserId { get; set; }
+
         [NotMapped]
         public List<Cars> Cars { get; set; }
     }

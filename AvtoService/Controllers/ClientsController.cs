@@ -23,7 +23,10 @@ namespace AvtoService.Controllers
         [HttpGet]
         public IEnumerable<Clients> GetClients()
         {
-            return _dbContext.Clients.Include(c => c.Cars).ToList();
+            return _dbContext.Clients
+                                .Include(c => c.Cars)
+                                .Include(c => c.Users)
+                                .ToList();
         }
 
         [HttpPost]
@@ -31,6 +34,16 @@ namespace AvtoService.Controllers
         {
             try
             {
+                List<UserRoles> userRoles = new List<UserRoles>();
+                userRoles.Add(new UserRoles
+                {
+                    RoleId = _dbContext.Roles.SingleOrDefault(r => r.Value.Equals("user")).Id,
+                });
+
+                clients.Users.Login = clients.Users.Login.ToLower();
+                clients.Users.Password = clients.Users.Password;
+                clients.Users.RegistrationDate = DateTime.Now;
+
                 _dbContext.Clients.Add(clients);
                 _dbContext.SaveChanges();
                 return Ok();

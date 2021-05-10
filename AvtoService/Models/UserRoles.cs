@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace AvtoService.Models
 {
-    public class Employees : UserDetails
+    public class UserRoles
     {
-        public Users Users { get; set; }
-
         public int? UserId { get; set; }
+        public int? RoleId { get; set; }
+        public Users Users { get; set; }
+        public Roles Roles { get; set; }
     }
 }
