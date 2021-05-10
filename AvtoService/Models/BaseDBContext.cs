@@ -20,16 +20,18 @@ namespace AvtoService.Models
                 .WithMany(c => c.Cars)
                 .HasForeignKey(c => c.ClientId);
 
-            modelBuilder.Entity<Cars>()
-                .HasMany(s=>s.RepairOrders)
-                .WithOne(c=>c.Cars)
-                .HasForeignKey(c=>c.Id)
+            //modelBuilder.Entity<Cars>()
+            //    .HasMany(s=>s.RepairOrders)
+            //    .WithOne(c=>c.Cars)
+            //    .HasForeignKey(c=>c.Id)
         }
 
 
         public DbSet<Employees> Employees { get; set; }
 
         public DbSet<Clients> Clients { get; set; }
+
+        public DbSet<Users> Users { get; set; }
 
         public DbSet<TypeOfWork> TypeOfWork { get; set; }
 
