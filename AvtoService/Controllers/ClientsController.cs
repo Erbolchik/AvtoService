@@ -43,6 +43,7 @@ namespace AvtoService.Controllers
                 clients.Users.Login = clients.Users.Login.ToLower();
                 clients.Users.Password = clients.Users.Password;
                 clients.Users.RegistrationDate = DateTime.Now;
+                clients.Users.UserRoles = userRoles;
 
                 _dbContext.Clients.Add(clients);
                 _dbContext.SaveChanges();
