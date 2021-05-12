@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button, Input, message } from 'antd';
+import { login } from '../../api';
 
 const Login = () => {
   const history = useHistory();
 
   const onFinish = (values) => {
     message.loading({ content: `Загрузка...`, key: 'updatable' });
-
-    alert(values)
+    login(values)
       .then((res) => res.json())
       .then((res) => {
         if (!res.token) {

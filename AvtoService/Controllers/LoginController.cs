@@ -1,10 +1,13 @@
 ﻿using AvtoService.Models;
+using AvtoService.Utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,19 +20,77 @@ namespace AvtoService.Controllers
     {
         private readonly BaseDBContext _dbContext;
         private readonly AuthOptions _options;
+        private readonly IConfiguration _config;
+
 
         public LoginController(BaseDBContext dbContext,
-                               IOptions<AuthOptions> options)
+                               IOptions<AuthOptions> options,
+                               IConfiguration config)
         {
             _dbContext = dbContext;
             _options = options.Value;
+            _config = config;
+
         }
 
-        [HttpPost("login")]
-        public IActionResult Login([FromBody] SomeExample user)
+        [HttpPost]
+        public IActionResult Login([FromBody] Users loggedUser)
         {
-            string token = CreateToken(GetClaims(user));
-            return Ok(token);
+            IActionResult response = Unauthorized();
+            var user = Authenticate(loggedUser);
+            if (user != null)
+            {
+                var token = GenerateJWT(user);
+                response = Ok(new { token });
+            }
+            return response;
+
+        }
+
+        private IdentityUser Authenticate(Users loggedUser)
+        {
+            IdentityUser user = null;
+            string password = Encryptor.MD5Hash(loggedUser.Password);
+            if (_dbContext.Users.Any(m => m.Login == loggedUser.Login.ToLower() && m.Password == password))
+            {
+                Users u = _dbContext.Users.FirstOrDefault(m => m.Login == loggedUser.Login.ToLower() && m.Password == password);
+                int? rolesId = _dbContext.UserRoles.FirstOrDefault(m => m.UserId == u.Id).RoleId;
+                string role = _dbContext.Roles.FirstOrDefault(m => m.Id == rolesId).Value;
+
+
+                _dbContext.SaveChanges();
+                user = new IdentityUser()
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    Login = u.Login,
+                    Role = role
+                };
+            }
+            return user;
+        }
+
+
+        private string GenerateJWT(IdentityUser user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SignInKey"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[] {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Login),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
+            };
+            var token = new JwtSecurityToken(
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Issuer"],
+                claims,
+                expires: DateTime.Now.AddMinutes(480),
+                signingCredentials: credentials
+                );
+            var encodeToken = new JwtSecurityTokenHandler().WriteToken(token);
+            return encodeToken;
 
         }
 

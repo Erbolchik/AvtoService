@@ -54,3 +54,11 @@ export const deleteServiceSpending = (id) => {
   return instance().delete(`/api/ServiceSpending/${id}`);
 };
 //#endregion
+
+//#region Login
+
+export const login = (data) => {
+  return instance().post(`/api/login`, data);
+};
+
+//#endregion

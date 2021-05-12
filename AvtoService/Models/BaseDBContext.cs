@@ -73,5 +73,12 @@ namespace AvtoService.Models
         public DbSet<ServiceSpending> ServiceSpendings { get; set; }
 
         public DbSet<Roles> Roles { get; set; }
+
+        public DbSet<UserRoles> UserRoles { get; set; }
+
+        public DbSet<RoleTasks> RoleTasks { get; set; }
+
+        public DbSet<Tasks> Tasks { get; set; }
+
     }
 }
