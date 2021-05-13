@@ -31,6 +31,8 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const BaseLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
+
+  
   return (
     <Router>
       <Layout style={{ minHeight: '100vh' }}>
