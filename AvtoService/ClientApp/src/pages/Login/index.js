@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Form, Button, Input, message } from 'antd';
 import { login } from '../../api';
+import { Context } from '../../common';
 
 const Login = () => {
   const history = useHistory();
+  const { setToken } = useContext(Context);
 
   const onFinish = (values) => {
     message.loading({ content: `Загрузка...`, key: 'updatable' });
@@ -20,6 +22,7 @@ const Login = () => {
             });
           }, 1000);
         } else {
+          setToken(res.token);
           localStorage.setItem('token', res.token);
           setTimeout(() => {
             message.success({
@@ -44,7 +47,6 @@ const Login = () => {
   return (
     <div>
       <Form
-        // {...layout}
         name="basic"
         initialValues={{ remember: true }}
         labelCol={{

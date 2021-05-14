@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Switch, Redirect } from 'react-router-dom';
 import { Layout, Menu, PageHeader } from 'antd';
 import {
   Login,
@@ -26,13 +26,13 @@ import {
   CreditCardOutlined,
 } from '@ant-design/icons';
 import './index.css';
+import PrivateRoute from './PrivateRoute';
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const BaseLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
 
-  
   return (
     <Router>
       <Layout style={{ minHeight: '100vh' }}>
@@ -85,7 +85,7 @@ const BaseLayout = () => {
             <Switch>
               <Route exact={true} path="/" component={MainPage} />
               <Route path="/login" component={Login} />
-              <Route path="/cars" component={Cars} />
+              <PrivateRoute path="/cars" component={Cars} />
               <Route path="/orderRepair" component={OrderRepair} />
               <Route path="/reports" component={Reports} />
               <Route path="/spendingService" component={ServiceSpending} />
