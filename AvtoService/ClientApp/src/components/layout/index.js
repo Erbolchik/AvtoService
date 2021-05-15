@@ -59,19 +59,15 @@ const BaseLayout = () => {
               <span>Расходы сервиса</span>
               <Link to="/spendingService" />
             </Menu.Item>
-            <Menu.Item key="6" icon={<MailOutlined />}>
-              <span>Login</span>
-              <Link to="/login" />
-            </Menu.Item>
-            <Menu.Item key="7" icon={<FileDoneOutlined />}>
+            <Menu.Item key="6" icon={<FileDoneOutlined />}>
               <span>Отчеты</span>
               <Link to="/reports" />
             </Menu.Item>
-            <Menu.Item key="8" icon={<TeamOutlined />}>
+            <Menu.Item key="7" icon={<TeamOutlined />}>
               <span>Сотрудники</span>
               <Link to="/employees" />
             </Menu.Item>
-            <Menu.Item key="9" icon={<TeamOutlined />}>
+            <Menu.Item key="8" icon={<TeamOutlined />}>
               <span>Клиенты</span>
               <Link to="/clients" />
             </Menu.Item>
@@ -84,14 +80,14 @@ const BaseLayout = () => {
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
               <Route exact={true} path="/" component={MainPage} />
-              <Route path="/login" component={Login} />
               <PrivateRoute path="/cars" component={Cars} />
-              <Route path="/orderRepair" component={OrderRepair} />
-              <Route path="/reports" component={Reports} />
-              <Route path="/spendingService" component={ServiceSpending} />
-              <Route path="/userProfile" component={UserProfile} />
-              <Route path="/employees" component={Employees} />
-              <Route path="/clients" component={Clients} />
+              <PrivateRoute path="/orderRepair" component={OrderRepair} />
+              <PrivateRoute path="/reports" component={Reports} />
+              <PrivateRoute path="/spendingService" component={ServiceSpending} />
+              <PrivateRoute path="/userProfile" component={UserProfile} />
+              <PrivateRoute path="/employees" component={Employees} />
+              <PrivateRoute path="/clients" component={Clients} />
+              <Route exact path={'/login'} component={Login} />
               <Route exact={true} path="*" component={NotFound} />
             </Switch>
           </Content>

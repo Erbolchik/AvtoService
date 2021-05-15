@@ -1,12 +1,12 @@
 import React from 'react';
 import { Result, Button } from 'antd';
 
-const NotFound = () => {
+const UnAuthorize = () => {
   return (
     <Result
-      status="404"
-      title="404"
-      subTitle="Страница не найдена"
+      status="403"
+      title="403"
+      subTitle={`Вы не зашли в систему`}
       extra={
         <Button
           type="primary"
@@ -20,4 +20,4 @@ const NotFound = () => {
   );
 };
 
-export default NotFound;
+export default UnAuthorize;

@@ -50,10 +50,9 @@ namespace AvtoService.Controllers
         private IdentityUser Authenticate(Users loggedUser)
         {
             IdentityUser user = null;
-            string password = Encryptor.MD5Hash(loggedUser.Password);
-            if (_dbContext.Users.Any(m => m.Login == loggedUser.Login.ToLower() && m.Password == password))
+            if (_dbContext.Users.Any(m => m.Login == loggedUser.Login.ToLower() && m.Password == loggedUser.Password))
             {
-                Users u = _dbContext.Users.FirstOrDefault(m => m.Login == loggedUser.Login.ToLower() && m.Password == password);
+                Users u = _dbContext.Users.FirstOrDefault(m => m.Login == loggedUser.Login.ToLower() && m.Password == loggedUser.Password);
                 int? rolesId = _dbContext.UserRoles.FirstOrDefault(m => m.UserId == u.Id).RoleId;
                 string role = _dbContext.Roles.FirstOrDefault(m => m.Id == rolesId).Value;
 

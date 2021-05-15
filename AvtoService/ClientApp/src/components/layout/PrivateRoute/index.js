@@ -19,25 +19,12 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
             }}
           />
         );
-      } else {
-        const role = persistedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        if (role && roles.indexOf(role) === -1) {
-          return (
-            <Redirect
-              to={{
-                pathname: '/error/noaccess',
-                state: { from: props.location },
-              }}
-            />
-          );
-        }
-        return <Component {...props} />;
       }
     } else {
       return (
         <Redirect
           to={{
-            pathname: '/error/unauthorized',
+            pathname: '/login',
             state: { from: props.location },
           }}
         />
