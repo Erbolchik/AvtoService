@@ -1,53 +1,33 @@
+import React, { useState, useEffect } from 'react';
+import { deleteWorkType, getWorkTypes } from '../../api';
 import { Button, Popconfirm, Table, Tooltip } from 'antd';
-import React, { useEffect, useState } from 'react';
-import { getClients } from '../../api';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
-import { ClientsModal } from './ClientsModal';
+import { WorkTypeModal } from './WorkTypeModal';
 
-function Clients() {
-  const [clients, setClients] = useState();
+function WorkTypes() {
+  const [workTypes, setWorkTypes] = useState();
   const [modalProps, setModalProps] = useState({
     visible: false,
     actionType: null,
-    currentClients: null,
+    currentWorkType: null,
   });
+
   useEffect(() => {
-    getClients().then(({ data }) => setClients(data));
-  }, []);
+    getWorkTypes().then(({ data }) => {
+      setWorkTypes(data);
+    });
+  }, [modalProps]);
 
   const columns = [
     {
-      title: `Фамилия`,
-      dataIndex: 'lastName',
-      key: 'lastName',
+      title: `Название работы`,
+      dataIndex: 'name',
+      key: 'name',
     },
     {
-      title: `Имя`,
-      dataIndex: 'firstName',
-      key: 'firstName',
-    },
-    {
-      title: `Отчество`,
-      dataIndex: 'middleName',
-      key: 'middleName',
-    },
-    {
-      title: `Номер телефона`,
-      dataIndex: 'phone',
-      key: 'phone',
-      render: (_, u) => u.users.phone,
-    },
-    {
-      title: `Логин пользователя`,
-      dataIndex: 'login',
-      key: 'login',
-      render: (_, u) => u.users.login,
-    },
-    {
-      title: `Почта`,
-      dataIndex: 'email',
-      key: 'email',
-      render: (_, u) => u.users.email,
+      title: `Описание работы`,
+      dataIndex: 'description',
+      key: 'description',
     },
     {
       title: `Действие`,
@@ -63,7 +43,7 @@ function Clients() {
               setModalProps({
                 visible: !modalProps.visible,
                 actionType: 'edit',
-                currentClients: clients && clients.find((el) => el.id === id),
+                currentWorkType: workTypes && workTypes.find((el) => el.id === id),
               });
             }}
           />
@@ -81,7 +61,7 @@ function Clients() {
           <Popconfirm
             placement="bottom"
             title={'Вы точно хотите удалить ?'}
-            // onConfirm={() => confirm(id)}
+            onConfirm={() => confirm(id)}
             okText={'Да'}
             cancelText={'Нет'}>
             <DeleteTwoTone key="delete" twoToneColor="#eb2f96" />
@@ -90,6 +70,11 @@ function Clients() {
       ),
     },
   ];
+
+  const confirm = (id) => {
+    deleteWorkType(id);
+    setModalProps({ visible: false, actionType: null, currentWorkType: null });
+  };
 
   function closeModal() {
     return setModalProps({ visible: false });
@@ -108,18 +93,11 @@ function Clients() {
 
   return (
     <React.Fragment>
-      <h1>Клиенты</h1>
-      <ClientsModal modalProps={modalProps} closeModal={closeModal} />
-      <Table
-        style={{ marginTop: 24 }}
-        scroll={{ x: 1300 }}
-        columns={columns}
-        dataSource={clients}
-        rowKey="id"
-        footer={TableFotter}
-      />
+      <h1>Виды работ</h1>
+      <WorkTypeModal modalProps={modalProps} closeModal={closeModal} />
+      <Table columns={columns} dataSource={workTypes} key="id" footer={TableFotter} />
     </React.Fragment>
   );
 }
 
-export default Clients;
+export default WorkTypes;

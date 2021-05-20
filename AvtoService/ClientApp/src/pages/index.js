@@ -7,6 +7,7 @@ import Clients from './Clients';
 import Cars from './Cars';
 import OrderRepair from './OrderRepair';
 import ServiceSpending from './ServiceSpending';
+import WorkTypes from './WorkTypes';
 
 export {
   Login,
@@ -18,4 +19,5 @@ export {
   Cars,
   OrderRepair,
   ServiceSpending,
+  WorkTypes,
 };

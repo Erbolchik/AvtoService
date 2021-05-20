@@ -11,6 +11,7 @@ import {
   Cars,
   OrderRepair,
   ServiceSpending,
+  WorkTypes,
 } from '../../pages';
 import NotFound from '../../pages/Error/NotFound';
 import {
@@ -41,7 +42,7 @@ const BaseLayout = () => {
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1" icon={<HomeOutlined />}>
               <span>Главная</span>
-              <Link to="/userProfile" />
+              <Link to="/" />
             </Menu.Item>
             <Menu.Item key="2" icon={<UserOutlined />}>
               <span>Личный кабинет</span>
@@ -71,6 +72,10 @@ const BaseLayout = () => {
               <span>Клиенты</span>
               <Link to="/clients" />
             </Menu.Item>
+            <Menu.Item key="9" icon={<TeamOutlined />}>
+              <span>Виды работ</span>
+              <Link to="/workTypes" />
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
@@ -80,14 +85,16 @@ const BaseLayout = () => {
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
               <Route exact={true} path="/" component={MainPage} />
-              <PrivateRoute path="/cars" component={Cars} />
-              <PrivateRoute path="/orderRepair" component={OrderRepair} />
-              <PrivateRoute path="/reports" component={Reports} />
-              <PrivateRoute path="/spendingService" component={ServiceSpending} />
-              <PrivateRoute path="/userProfile" component={UserProfile} />
-              <PrivateRoute path="/employees" component={Employees} />
-              <PrivateRoute path="/clients" component={Clients} />
-              <Route exact path={'/login'} component={Login} />
+              <Route path="/cars" component={Cars} />
+              <Route path="/orderRepair" component={OrderRepair} />
+              <Route path="/reports" component={Reports} />
+              <Route path="/spendingService" component={ServiceSpending} />
+              <Route path="/userProfile" component={UserProfile} />
+              <Route path="/employees" component={Employees} />
+              <Route path="/clients" component={Clients} />
+              <Route path="/workTypes" component={WorkTypes} />
+
+              {/* <Route exact path={'/login'} component={Login} /> */}
               <Route exact={true} path="*" component={NotFound} />
             </Switch>
           </Content>

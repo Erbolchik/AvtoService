@@ -106,6 +106,7 @@ function Employees() {
 
   return (
     <React.Fragment>
+      <h1>Сотрудники</h1>
       <EmployeeModal modalProps={modalProps} closeModal={closeModal} />
       <Table columns={columns} dataSource={employees} rowKey="id" footer={TableFotter} />
     </React.Fragment>

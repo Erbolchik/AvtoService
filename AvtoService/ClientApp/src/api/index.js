@@ -62,3 +62,23 @@ export const login = (data) => {
 };
 
 //#endregion
+
+//#region Login
+
+export const getWorkTypes = () => {
+  return instance().get(`/api/TypeOfWork`);
+};
+
+export const saveWorkType = (data) => {
+  return instance().post('/api/TypeOfWork', data);
+};
+
+export const updateWorkType = (data) => {
+  return instance().put('/api/TypeOfWork', data);
+};
+
+export const deleteWorkType = (id) => {
+  return instance().delete(`/api/TypeOfWork/${id}`);
+};
+
+//#endregion
