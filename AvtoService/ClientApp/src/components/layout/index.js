@@ -94,7 +94,7 @@ const BaseLayout = () => {
               <Route path="/clients" component={Clients} />
               <Route path="/workTypes" component={WorkTypes} />
 
-              {/* <Route exact path={'/login'} component={Login} /> */}
+              <Route exact path={'/login'} component={Login} />
               <Route exact={true} path="*" component={NotFound} />
             </Switch>
           </Content>
