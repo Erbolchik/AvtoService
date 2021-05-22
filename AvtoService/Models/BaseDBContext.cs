@@ -51,6 +51,8 @@ namespace AvtoService.Models
                 .HasOne(s => s.Employees)
                 .WithOne(u => u.Users)
                 .HasForeignKey<Employees>(u => u.UserId);
+
+               
         }
 
 

@@ -6,7 +6,7 @@ export function CarsModal({ modalProps, closeModal }) {
   const { actionType, visible, currentCars } = modalProps;
   const [form] = Form.useForm();
   const modalTitle =
-    actionType === 'save' ? 'Создание сотрудника' : 'Редактирование данных сотрудника школы';
+    actionType === 'save' ? 'Создание автомобили' : 'Редактирование данных сотрудника школы';
   const requiredMessage = 'Это поле является обязательным';
   const initialState = {
     lastName: '',
@@ -45,22 +45,22 @@ export function CarsModal({ modalProps, closeModal }) {
         layout="horizontal"
         initialValues={actionType == 'edit' ? currentCars : initialState}>
         <Form.Item
-          label={'Фамилия'}
+          label={'Гос номер'}
           name="lastName"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Фамилия'} />
+          <Input placeholder={'Гос номер'} />
         </Form.Item>
         <Form.Item
-          label={'Имя'}
+          label={'Марка'}
           name="firstName"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Имя'} />
+          <Input placeholder={'Марка'} />
         </Form.Item>
         <Form.Item
-          label={'Отчество'}
+          label={'Собственник'}
           name="middleName"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Отчество'} />
+          <Input placeholder={'Собственник'} />
         </Form.Item>
         <Form.Item
           label={'Номер телефона'}
@@ -69,22 +69,16 @@ export function CarsModal({ modalProps, closeModal }) {
           <Input placeholder={'Номер телефона'} />
         </Form.Item>
         <Form.Item
-          label={'Логин пользователя'}
+          label={'Год выпуска'}
           name="login"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Логин пользователя'} />
+          <Input placeholder={'Год выпуска'} />
         </Form.Item>
         <Form.Item
-          label={'Пароль'}
-          name="password"
+          label={'VIN'}
+          name="login"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Пароль'} />
-        </Form.Item>
-        <Form.Item
-          label={'Почта'}
-          name="email"
-          rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Почта'} />
+          <Input placeholder={'Год выпуска'} />
         </Form.Item>
       </Form>
     </Modal>

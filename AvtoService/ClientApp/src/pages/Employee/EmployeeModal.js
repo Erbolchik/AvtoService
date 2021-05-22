@@ -22,7 +22,17 @@ export function EmployeeModal({ modalProps, closeModal }) {
   }, [actionType, currentEmployee, form]);
 
   const onSaveEmployee = () => {
-    saveEmployees(form.getFieldsValue()).then(() => {
+    saveEmployees({
+      lastName: form.getFieldsValue().lastName,
+      firstName: form.getFieldsValue().firstName,
+      middleName: form.getFieldsValue().middleName,
+      users: {
+        login: form.getFieldsValue().login,
+        password: form.getFieldsValue().password,
+        phone: form.getFieldsValue().phone,
+        email: form.getFieldsValue().email,
+      },
+    }).then(() => {
       message.success('Успешно добавлено', { duration: 2 });
       closeModal();
     });

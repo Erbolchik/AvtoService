@@ -6,16 +6,50 @@ import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { CarsModal } from './CarsModal';
 
 function Cars() {
-  const [cars, setCars] = useState();
+  // const [cars, setCars] = useState();
   const [modalProps, setModalProps] = useState({
     visible: false,
     actionType: null,
     currentEmployee: null,
   });
   useEffect(() => {
-    getCars().then(({ data }) => setCars(data));
+    // getCars().then(({ data }) => setCars(data));
   }, []);
 
+  const cars = [
+    {
+      governmentNumber: 1111111,
+      model: 'Toyota',
+      owner: 'Сатыбалдин Ербол',
+      phoneOwner: '+77088874530',
+      yearOfIssue: 2020,
+      vin: '777era09',
+    },
+    {
+      governmentNumber: 2222222,
+      model: 'Toyota',
+      owner: 'Сатыбалдин Нурбол',
+      phoneOwner: '+77088874528',
+      yearOfIssue: 2013,
+      vin: '777nur09',
+    },
+    {
+      governmentNumber: 3333333,
+      model: 'BMW',
+      owner: 'Какиш Ерасыл',
+      phoneOwner: '+77898756330',
+      yearOfIssue: 2005,
+      vin: '138kkk02',
+    },
+    {
+      governmentNumber: 4444444,
+      model: 'Mercedes-Benz',
+      owner: 'Семейханов Асхат',
+      phoneOwner: '+77012345530',
+      yearOfIssue: 2021,
+      vin: '123ask12',
+    },
+  ];
   const columns = [
     {
       title: `Гос. номер`,
@@ -30,24 +64,26 @@ function Cars() {
     {
       title: `Собственник`,
       key: 'owner',
-      render: (e, e1) => {
-        return e1.clients.lastName + ' ' + e1.clients.firstName + ' ' + e1.clients.middleName;
-      },
+      dataIndex: 'owner',
+      // render: (e, e1) => {
+      //   return e1.clients.lastName + ' ' + e1.clients.firstName + ' ' + e1.clients.middleName;
+      // },
     },
     {
       title: `Телефон`,
       key: 'phoneOwner',
-      render: (e, e1) => {
-        return e1.clients.phone;
-      },
+      dataIndex: 'phoneOwner',
+      // render: (e, e1) => {
+      //   return e1.clients.phone;
+      // },
     },
     {
       title: `Год выпуска`,
       dataIndex: 'yearOfIssue',
       key: 'YearOfIssue',
-      render: (e) => {
-        return moment(e).format('DD.MM.YYYY');
-      },
+      // render: (e) => {
+      //   return moment(e).format('DD.MM.YYYY');
+      // },
     },
     {
       title: `VIN`,
@@ -112,6 +148,7 @@ function Cars() {
   }
   return (
     <React.Fragment>
+      <h1>Автомобили</h1>
       <CarsModal modalProps={modalProps} closeModal={closeModal} />
       <Table columns={columns} dataSource={cars} rowKey="id" footer={TableFotter} />
     </React.Fragment>

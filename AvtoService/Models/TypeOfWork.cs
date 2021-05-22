@@ -13,5 +13,7 @@ namespace AvtoService.Models
 
         public string Description { get; set; }
 
+        public Employees Employees { get; set; }
+
     }
 }

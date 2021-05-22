@@ -36,16 +36,19 @@ function Employees() {
       title: `Номер телефона`,
       dataIndex: 'phone',
       key: 'phone',
+      render: (_, u) => u.users.phone,
     },
     {
       title: `Логин пользователя`,
       dataIndex: 'login',
       key: 'login',
+      render: (_, u) => u.users.login,
     },
     {
       title: `Почта`,
       dataIndex: 'email',
       key: 'email',
+      render: (_, u) => u.users.email,
     },
     {
       title: `Действие`,

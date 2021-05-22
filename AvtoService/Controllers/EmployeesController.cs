@@ -1,5 +1,6 @@
 ﻿using AvtoService.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace AvtoService.Controllers
         [HttpGet]
         public IEnumerable<Employees> GetEmployees()
         {
-            return _dbContext.Employees.ToList();
+            return _dbContext.Employees.Include(u => u.Users).ToList();
         }
 
         [HttpPost]
@@ -28,6 +29,17 @@ namespace AvtoService.Controllers
         {
             try
             {
+                List<UserRoles> userRoles = new List<UserRoles>();
+                userRoles.Add(new UserRoles
+                {
+                    RoleId = _dbContext.Roles.SingleOrDefault(r => r.Value.Equals("employee")).Id,
+                });
+
+                employees.Users.Login = employees.Users.Login.ToLower();
+                employees.Users.Password = employees.Users.Password;
+                employees.Users.RegistrationDate = DateTime.Now;
+                employees.Users.UserRoles = userRoles;
+
                 _dbContext.Employees.Add(employees);
                 _dbContext.SaveChanges();
                 return Ok();

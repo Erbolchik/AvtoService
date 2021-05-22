@@ -76,16 +76,16 @@ function OrderRepair() {
     width: '50%',
     textAlign: 'center',
   };
+  const style = { background: '#0092ff', padding: '1px 0' };
   return (
     <div>
-      <Row>
-        <Col span={6} order={3}>
-          <Table columns={orderRepairColumns}></Table>
+      <Row gutter={[16, 24]}>
+        <Col className="gutter-row" span={14}>
+          <div>
+            <Table columns={orderRepairColumns} bordered scroll={{ x: '15px' }} />
+          </div>
         </Col>
-        <Col span={6} order={2}>
-          <Table columns={commentColumns}></Table>
-        </Col>
-        <Col span={6} order={1}>
+        <Col className="gutter-row" span={10}>
           <Card title="Информация">
             <Card.Grid hoverable={false} style={gridStyle}>
               Марка
@@ -118,6 +118,12 @@ function OrderRepair() {
               +77088874530
             </Card.Grid>
           </Card>
+        </Col>
+        <Col className="gutter-row" span={14}>
+          <div></div>
+        </Col>
+        <Col className="gutter-row" span={10}>
+          <Table columns={commentColumns} bordered scroll={{ x: '15px' }} />
         </Col>
       </Row>
     </div>
