@@ -12,6 +12,7 @@ import {
   OrderRepair,
   ServiceSpending,
   WorkTypes,
+  Registration,
 } from '../../pages';
 import NotFound from '../../pages/Error/NotFound';
 import {
@@ -93,8 +94,8 @@ const BaseLayout = () => {
               <Route path="/employees" component={Employees} />
               <Route path="/clients" component={Clients} />
               <Route path="/workTypes" component={WorkTypes} />
-
               <Route exact path={'/login'} component={Login} />
+              <Route exact path={'/registration'} component={Registration} />
               <Route exact={true} path="*" component={NotFound} />
             </Switch>
           </Content>
