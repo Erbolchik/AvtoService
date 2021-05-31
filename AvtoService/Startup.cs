@@ -66,7 +66,7 @@ namespace AvtoService
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
                     ValidIssuer = options.Issuer,
-                    ValidAudience = options.Audience,
+                    ValidAudience = options.Issuer,
                     ClockSkew = TimeSpan.Zero,
                     IssuerSigningKey = new SymmetricSecurityKey(
                             options.GetSignInKeyBytes())
