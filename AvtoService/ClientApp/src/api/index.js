@@ -82,3 +82,11 @@ export const deleteWorkType = (id) => {
 };
 
 //#endregion
+
+//#region User
+
+export const getMyProfile = () => {
+  return instance().get(`/api/User/GetMyProfile`);
+};
+
+//#endregion

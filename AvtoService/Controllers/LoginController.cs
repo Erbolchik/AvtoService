@@ -72,7 +72,7 @@ namespace AvtoService.Controllers
 
         private string GenerateJWT(IdentityUser user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SignInKey"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Auth:SignInKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Login),
@@ -82,8 +82,8 @@ namespace AvtoService.Controllers
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role)
             };
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Issuer"],
+                issuer: _config["Auth:Issuer"],
+                audience: _config["Auth:Issuer"],
                 claims,
                 expires: DateTime.Now.AddMinutes(480),
                 signingCredentials: credentials
