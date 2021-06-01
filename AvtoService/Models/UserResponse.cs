@@ -15,9 +15,11 @@ namespace AvtoService.Models
         
         public string Email { get; set; }
         
+        public string Role { get; set; }
+
         public string RoleName { get; set; }
 
-        public DateTime RegistrationName { get; set; }
+        public DateTime RegistrationDate { get; set; }
 
     }
 }

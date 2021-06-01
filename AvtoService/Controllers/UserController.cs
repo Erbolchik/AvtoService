@@ -46,7 +46,7 @@ namespace AvtoService.Controllers
                 UserResponse userResponse = new UserResponse();
                 userResponse.Email = user.Email;
                 userResponse.Login = user.Login;
-                userResponse.RegistrationName = user.RegistrationDate;
+                userResponse.RegistrationDate = user.RegistrationDate;
                 userResponse.Phone = user.Phone;
                 if (user.Clients != null)
                 {
@@ -59,7 +59,8 @@ namespace AvtoService.Controllers
 
                 if (user.UserRoles[0] != null)
                 {
-                    userResponse.RoleName = user.UserRoles[0].Roles.Value;
+                    userResponse.Role = user.UserRoles[0].Roles.Value;
+                    userResponse.RoleName = user.UserRoles[0].Roles.Name;
                 }
 
                 return Ok(userResponse);
