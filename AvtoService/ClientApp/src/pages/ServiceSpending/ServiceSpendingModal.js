@@ -2,13 +2,11 @@ import React, { useEffect } from 'react';
 import { Modal, message, Form, Input, DatePicker } from 'antd';
 import { saveServiceSpending, updateServiceSpending } from '../../api';
 import TextArea from 'antd/lib/input/TextArea';
-import moment from 'moment';
 
 export function ServiceSpendingModal({ modalProps, closeModal }) {
   const { actionType, visible, currentServiceSpending } = modalProps;
   const [form] = Form.useForm();
   const dateFormat = 'DD/MM/YYYY';
-  console.log(currentServiceSpending);
   const modalTitle =
     actionType === 'save' ? 'Создание записи о затрате' : 'Редактирование записи о затрате';
   const requiredMessage = 'Это поле является обязательным';
@@ -19,13 +17,14 @@ export function ServiceSpendingModal({ modalProps, closeModal }) {
   };
 
   useEffect(() => {
-    actionType == 'edit' &&
-      form.setFieldsValue({
-        date: null,
-        name: currentServiceSpending.name,
-        price: currentServiceSpending.price,
-        id: currentServiceSpending.id,
-      });
+    actionType == 'edit'
+      ? form.setFieldsValue({
+          date: null,
+          name: currentServiceSpending.name,
+          price: currentServiceSpending.price,
+          id: currentServiceSpending.id,
+        })
+      : form.resetFields();
   }, [actionType, currentServiceSpending, form]);
 
   const onSaveServiceSpending = () => {

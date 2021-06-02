@@ -56,11 +56,11 @@ namespace AvtoService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteClient(int clientId)
+        public IActionResult DeleteClient(int id)
         {
             try
             {
-                var client = _dbContext.Clients.SingleOrDefault(c => c.Id == clientId);
+                var client = _dbContext.Clients.SingleOrDefault(c => c.Id == id);
                 _dbContext.Clients.Remove(client);
                 _dbContext.SaveChanges();
                 return Ok();
@@ -72,10 +72,18 @@ namespace AvtoService.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateClient(Clients updatedClient)
+        public IActionResult UpdateClient([FromBody] Clients updatedClient)
         {
             try
             {
+                Users user = _dbContext.Users.SingleOrDefault(u => u.Id == updatedClient.UserId);
+                user.Login = updatedClient.Users.Login.ToLower();
+                user.Password = updatedClient.Users.Password;
+                user.Email = updatedClient.Users.Email;
+                user.Phone = updatedClient.Users.Phone;
+                updatedClient.Users = user;
+
+                _dbContext.Users.Update(user);
                 _dbContext.Clients.Update(updatedClient);
                 _dbContext.SaveChanges();
                 return Ok();

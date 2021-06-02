@@ -1,6 +1,6 @@
-import { Button, Input, Popconfirm, Space, Table, Tooltip } from 'antd';
+import { Button, Input, message, Popconfirm, Space, Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { getEmployees } from '../../api';
+import { deleteEmployee, getEmployees } from '../../api';
 import { EmployeeModal } from './EmployeeModal';
 import { DeleteTwoTone, EditTwoTone, SearchOutlined } from '@ant-design/icons';
 
@@ -82,7 +82,7 @@ function Employees() {
           <Popconfirm
             placement="bottom"
             title={'Вы точно хотите удалить ?'}
-            // onConfirm={() => confirm(id)}
+            onConfirm={() => confirm(id)}
             okText={'Да'}
             cancelText={'Нет'}>
             <DeleteTwoTone key="delete" twoToneColor="#eb2f96" />
@@ -92,12 +92,24 @@ function Employees() {
     },
   ];
 
+  const confirm = (id) => {
+    deleteEmployee(id).then(() => {
+      setModalProps({ visible: false, actionType: null, currentEmployee: null });
+      message.success('Успешно удалено', { duration: 5 });
+    });
+  };
+
   function TableFotter() {
     return (
       <Button
         type="primary"
         size="large"
-        onClick={() => setModalProps({ visible: !modalProps.visible, actionType: 'save' })}>
+        onClick={() =>
+          setModalProps({
+            visible: !modalProps.visible,
+            actionType: 'save',
+          })
+        }>
         Добавить
       </Button>
     );

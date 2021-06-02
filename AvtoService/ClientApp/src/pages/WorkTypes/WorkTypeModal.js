@@ -14,8 +14,6 @@ export function WorkTypeModal({ modalProps, closeModal }) {
     description: '',
   };
 
-  console.log(currentWorkType);
-  console.log(actionType);
   useEffect(() => {
     actionType == 'edit' ? form.setFieldsValue(currentWorkType) : form.setFieldsValue(initialState);
   }, [actionType, currentWorkType, form, initialState]);
@@ -33,7 +31,6 @@ export function WorkTypeModal({ modalProps, closeModal }) {
       closeModal();
     });
   };
-  console.log(form.getFieldsValue());
   return (
     <Modal
       title={modalTitle}

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, message, Form, Input, Select } from 'antd';
-import { saveEmployees } from '../../api';
+import { saveEmployees, updateEmployee } from '../../api';
+import MaskedInput from 'antd-mask-input';
 
 export function EmployeeModal({ modalProps, closeModal }) {
   const { actionType, visible, currentEmployee } = modalProps;
@@ -9,6 +10,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
     actionType === 'save' ? 'Создание сотрудника' : 'Редактирование данных сотрудника';
   const requiredMessage = 'Это поле является обязательным';
   const initialState = {
+    id: undefined,
     lastName: '',
     firstName: '',
     middleName: '',
@@ -18,7 +20,18 @@ export function EmployeeModal({ modalProps, closeModal }) {
   };
 
   useEffect(() => {
-    actionType == 'edit' && form.setFieldsValue(currentEmployee);
+    actionType == 'edit'
+      ? form.setFieldsValue({
+          id: currentEmployee.id,
+          lastName: currentEmployee.lastName,
+          firstName: currentEmployee.firstName,
+          middleName: currentEmployee.middleName,
+          login: currentEmployee.users.login,
+          password: currentEmployee.users.password,
+          phone: currentEmployee.users.phone,
+          email: currentEmployee.users.email,
+        })
+      : form.resetFields();
   }, [actionType, currentEmployee, form]);
 
   const onSaveEmployee = () => {
@@ -38,11 +51,30 @@ export function EmployeeModal({ modalProps, closeModal }) {
     });
   };
 
+  const onUpdateEmployee = () => {
+    updateEmployee({
+      id: currentEmployee.id,
+      lastName: form.getFieldsValue().lastName,
+      firstName: form.getFieldsValue().firstName,
+      middleName: form.getFieldsValue().middleName,
+      userId: currentEmployee.userId,
+      users: {
+        login: form.getFieldsValue().login,
+        password: form.getFieldsValue().password,
+        phone: form.getFieldsValue().phone,
+        email: form.getFieldsValue().email,
+      },
+    }).then(() => {
+      message.success('Успешно обновлено', { duration: 5 });
+      closeModal();
+    });
+  };
+
   return (
     <Modal
       title={modalTitle}
       visible={visible}
-      onOk={onSaveEmployee}
+      onOk={actionType == 'edit' ? onUpdateEmployee : onSaveEmployee}
       onCancel={() => closeModal()}
       okText="Сохранить"
       cancelText="Отменить"
@@ -76,7 +108,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
           label={'Номер телефона'}
           name="phone"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Номер телефона'} />
+          <MaskedInput mask="+7 (111) 111-11-11" placeholder="+7 (___) ___-__-__" />
         </Form.Item>
         <Form.Item
           label={'Логин пользователя'}
@@ -88,7 +120,7 @@ export function EmployeeModal({ modalProps, closeModal }) {
           label={'Пароль'}
           name="password"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Пароль'} />
+          <Input.Password placeholder={'Пароль'} />
         </Form.Item>
         <Form.Item
           label={'Почта'}

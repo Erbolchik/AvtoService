@@ -18,6 +18,14 @@ export const getEmployees = () => {
 export const saveEmployees = (data) => {
   return instance().post('/api/Employees', data);
 };
+
+export const updateEmployee = (data) => {
+  return instance().put('/api/Employees', data);
+};
+
+export const deleteEmployee = (id) => {
+  return instance().delete(`/api/Employees/${id}`);
+};
 //#endregion
 
 //#region Clients
@@ -27,6 +35,14 @@ export const getClients = () => {
 
 export const saveClient = (data) => {
   return instance().post('/api/Clients', data);
+};
+
+export const updateClient = (data) => {
+  return instance().put('/api/Clients', data);
+};
+
+export const deleteClient = (id) => {
+  return instance().delete(`/api/Clients/${id}`);
 };
 //#endregion
 

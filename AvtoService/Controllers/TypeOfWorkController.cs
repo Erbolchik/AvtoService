@@ -63,7 +63,7 @@ namespace AvtoService.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateTypeOfWork(TypeOfWork typeOfWork)
+        public IActionResult UpdateTypeOfWork([FromBody] TypeOfWork typeOfWork)
         {
             try
             {

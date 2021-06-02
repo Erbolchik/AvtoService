@@ -40,12 +40,12 @@ namespace AvtoService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteServiceSpending(int serviceSpendingId)
+        public IActionResult DeleteServiceSpending(int id)
         {
             try
             {
                 var serviceSpending = _dbContext.ServiceSpendings
-                                            .SingleOrDefault(c => c.Id == serviceSpendingId);
+                                            .SingleOrDefault(c => c.Id == id);
                 _dbContext.ServiceSpendings.Remove(serviceSpending);
                 _dbContext.SaveChanges();
                 return Ok();

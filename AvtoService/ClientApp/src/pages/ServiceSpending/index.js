@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { deleteServiceSpending, getServiceSpending } from '../../api';
-import { Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { ServiceSpendingModal } from './ServiceSpendingModal';
 import moment from 'moment';
@@ -82,8 +82,10 @@ function ServiceSpending() {
   ];
 
   const confirm = (id) => {
-    deleteServiceSpending(id);
-    setModalProps({ visible: false, actionType: null, currentServiceSpending: null });
+    deleteServiceSpending(id).then(() => {
+      setModalProps({ visible: false, actionType: null, currentServiceSpending: null });
+      message.success('Успешно удалено', { duration: 5 });
+    });
   };
 
   function closeModal() {

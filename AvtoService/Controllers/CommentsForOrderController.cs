@@ -41,11 +41,11 @@ namespace AvtoService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCommentsForOrder(int commentId)
+        public IActionResult DeleteCommentsForOrder(int id)
         {
             try
             {
-                var commentForOrder = _dbContext.CommentsForOrder.SingleOrDefault(c => c.Id == commentId);
+                var commentForOrder = _dbContext.CommentsForOrder.SingleOrDefault(c => c.Id == id);
                 _dbContext.CommentsForOrder.Remove(commentForOrder);
                 _dbContext.SaveChanges();
                 return Ok();

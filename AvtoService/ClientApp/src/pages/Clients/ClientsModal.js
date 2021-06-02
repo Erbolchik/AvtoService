@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal, message, Form, Input, Select } from 'antd';
-import { saveClient } from '../../api';
+import { saveClient, updateClient } from '../../api';
+import MaskedInput from 'antd-mask-input';
 
 export function ClientsModal({ modalProps, closeModal }) {
   const { actionType, visible, currentClients } = modalProps;
@@ -44,7 +45,26 @@ export function ClientsModal({ modalProps, closeModal }) {
         email: form.getFieldsValue().email,
       },
     }).then(() => {
-      message.success('Успешно добавлено', { duration: 2 });
+      message.success('Успешно добавлено', { duration: 5 });
+      closeModal();
+    });
+  };
+
+  const onUpdateClient = () => {
+    updateClient({
+      id: currentClients.id,
+      lastName: form.getFieldsValue().lastName,
+      firstName: form.getFieldsValue().firstName,
+      middleName: form.getFieldsValue().middleName,
+      userId: currentClients.userId,
+      users: {
+        login: form.getFieldsValue().login,
+        password: form.getFieldsValue().password,
+        phone: form.getFieldsValue().phone,
+        email: form.getFieldsValue().email,
+      },
+    }).then(() => {
+      message.success('Успешно обновлено', { duration: 5 });
       closeModal();
     });
   };
@@ -53,11 +73,10 @@ export function ClientsModal({ modalProps, closeModal }) {
     <Modal
       title={modalTitle}
       visible={visible}
-      onOk={onSaveClient}
+      onOk={actionType == 'edit' ? onUpdateClient : onSaveClient}
       onCancel={() => closeModal()}
       okText="Сохранить"
       cancelText="Отменить"
-      forceRender={true}
       width={600}>
       <Form
         form={form}
@@ -87,7 +106,7 @@ export function ClientsModal({ modalProps, closeModal }) {
           label={'Номер телефона'}
           name="phone"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Номер телефона'} />
+          <MaskedInput mask="+7 (111) 111-11-11" placeholder="+7 (___) ___-__-__" />
         </Form.Item>
         <Form.Item
           label={'Логин пользователя'}

@@ -42,11 +42,11 @@ namespace AvtoService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteCar(int carId)
+        public IActionResult DeleteCar(int id)
         {
             try
             {
-                var car = _dbContext.Cars.SingleOrDefault(car => car.Id == carId);
+                var car = _dbContext.Cars.SingleOrDefault(car => car.Id == id);
                 _dbContext.Cars.Remove(car);
                 _dbContext.SaveChanges();
                 return Ok();

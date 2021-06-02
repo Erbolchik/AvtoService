@@ -1,6 +1,6 @@
-import { Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
-import { getClients } from '../../api';
+import { getClients, deleteClient } from '../../api';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { ClientsModal } from './ClientsModal';
 
@@ -13,7 +13,7 @@ function Clients() {
   });
   useEffect(() => {
     getClients().then(({ data }) => setClients(data));
-  }, []);
+  }, [modalProps]);
 
   const columns = [
     {
@@ -81,7 +81,7 @@ function Clients() {
           <Popconfirm
             placement="bottom"
             title={'Вы точно хотите удалить ?'}
-            // onConfirm={() => confirm(id)}
+            onConfirm={() => confirm(id)}
             okText={'Да'}
             cancelText={'Нет'}>
             <DeleteTwoTone key="delete" twoToneColor="#eb2f96" />
@@ -90,6 +90,13 @@ function Clients() {
       ),
     },
   ];
+
+  const confirm = (id) => {
+    deleteClient(id).then(() => {
+      setModalProps({ visible: false, actionType: null, currentClients: null });
+      message.success('Успешно удалено', { duration: 5 });
+    });
+  };
 
   function closeModal() {
     return setModalProps({ visible: false });
