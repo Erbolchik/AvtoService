@@ -19,9 +19,16 @@ namespace AvtoService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TypeOfWork> GetTypeOfWorks()
+        public IActionResult GetTypeOfWorks()
         {
-            return _dbContext.TypeOfWork.ToList();
+            try
+            {
+                return Ok(_dbContext.TypeOfWork.ToList());
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception);
+            }
         }
 
         [HttpPost]
@@ -40,11 +47,11 @@ namespace AvtoService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteTypeOfWork(int typeOfWorkId)
+        public IActionResult DeleteTypeOfWork(int id)
         {
             try
             {
-                var typeOfWork = _dbContext.TypeOfWork.SingleOrDefault(c => c.Id == typeOfWorkId);
+                var typeOfWork = _dbContext.TypeOfWork.SingleOrDefault(c => c.Id == id);
                 _dbContext.TypeOfWork.Remove(typeOfWork);
                 _dbContext.SaveChanges();
                 return Ok();

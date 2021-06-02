@@ -8,6 +8,7 @@ export function ClientsModal({ modalProps, closeModal }) {
   const modalTitle = actionType === 'save' ? 'Создание клиента' : 'Редактирование данных клиента';
   const requiredMessage = 'Это поле является обязательным';
   const initialState = {
+    id: undefined,
     lastName: '',
     firstName: '',
     middleName: '',
@@ -17,8 +18,19 @@ export function ClientsModal({ modalProps, closeModal }) {
   };
 
   useEffect(() => {
-    actionType == 'edit' && form.setFieldsValue(currentClients);
-  }, [actionType, currentClients, form]);
+    actionType == 'edit'
+      ? form.setFieldsValue({
+          id: currentClients.id,
+          lastName: currentClients.lastName,
+          firstName: currentClients.firstName,
+          middleName: currentClients.middleName,
+          login: currentClients.users.login,
+          password: currentClients.users.password,
+          phone: currentClients.users.phone,
+          email: currentClients.users.email,
+        })
+      : form.resetFields();
+  }, [actionType, currentClients, form, initialState]);
 
   const onSaveClient = () => {
     saveClient({
@@ -87,7 +99,7 @@ export function ClientsModal({ modalProps, closeModal }) {
           label={'Пароль'}
           name="password"
           rules={[{ required: true, message: requiredMessage }]}>
-          <Input placeholder={'Пароль'} />
+          <Input.Password placeholder={'Пароль'} />
         </Form.Item>
         <Form.Item
           label={'Почта'}

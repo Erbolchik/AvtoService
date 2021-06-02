@@ -1,8 +1,8 @@
-import { Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Button, Input, Popconfirm, Space, Table, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { getEmployees } from '../../api';
 import { EmployeeModal } from './EmployeeModal';
-import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
+import { DeleteTwoTone, EditTwoTone, SearchOutlined } from '@ant-design/icons';
 
 function Employees() {
   const [employees, setEmployees] = useState();

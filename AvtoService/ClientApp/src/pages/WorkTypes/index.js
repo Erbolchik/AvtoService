@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { deleteWorkType, getWorkTypes } from '../../api';
-import { Button, Popconfirm, Table, Tooltip } from 'antd';
+import { Button, message, Popconfirm, Table, Tooltip } from 'antd';
 import { DeleteTwoTone, EditTwoTone } from '@ant-design/icons';
 import { WorkTypeModal } from './WorkTypeModal';
 
@@ -72,8 +72,10 @@ function WorkTypes() {
   ];
 
   const confirm = (id) => {
-    deleteWorkType(id);
-    setModalProps({ visible: false, actionType: null, currentWorkType: null });
+    deleteWorkType(id).then(() => {
+      setModalProps({ visible: false, actionType: null, currentWorkType: null });
+      message.success('Успешно удалено', { duration: 5 });
+    });
   };
 
   function closeModal() {
@@ -85,7 +87,9 @@ function WorkTypes() {
       <Button
         type="primary"
         size="large"
-        onClick={() => setModalProps({ visible: !modalProps.visible, actionType: 'save' })}>
+        onClick={() =>
+          setModalProps({ visible: !modalProps.visible, actionType: 'save', currentWorkType: null })
+        }>
         Добавить
       </Button>
     );
