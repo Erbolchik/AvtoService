@@ -20,6 +20,7 @@ const PrivateRoute = ({ component: Component, roles, ...rest }) => {
           />
         );
       }
+      return <Component {...props} />;
     } else {
       return (
         <Redirect

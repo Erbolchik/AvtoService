@@ -4,9 +4,7 @@ const instance = () =>
   axios.create({
     headers: {
       'Content-Type': 'application/json',
-      // Authorization: `Bearer ${localStorage.getItem('token')}`,
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImVtYWlsIjoiZGFzZHNhZGEiLCJuYW1laWQiOiIyIiwianRpIjoiNDgwMTNhMjctMTY2My00NTJkLWE2MTktM2FhY2U4NzlmOGQ0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoidXNlciIsImV4cCI6MTYyMjU5MTE4NiwiaXNzIjoiUm9hZHMiLCJhdWQiOiJSb2FkcyJ9.y4vkU1QzuMavxYq59Pvm5Fk-ResXQV6LZldvDrAwKeQ',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
 
@@ -53,6 +51,14 @@ export const getCars = () => {
 
 export const saveCar = (data) => {
   return instance().post('/api/Cars', data);
+};
+
+export const updateCar = (data) => {
+  return instance().put('/api/Cars', data);
+};
+
+export const deleteCar = (id) => {
+  return instance().delete(`/api/Cars/${id}`);
 };
 //#endregion
 

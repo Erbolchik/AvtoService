@@ -80,9 +80,8 @@ const Login = () => {
   const onFinish = (values) => {
     message.loading({ content: `Загрузка...`, key: 'updatable' });
     login(values)
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.token) {
+      .then(({ data }) => {
+        if (!data.token) {
           setTimeout(() => {
             message.error({
               content: `Ошибка`,
@@ -91,8 +90,8 @@ const Login = () => {
             });
           }, 1000);
         } else {
-          setToken(res.token);
-          localStorage.setItem('token', res.token);
+          setToken(data.token);
+          localStorage.setItem('token', data.token);
           setTimeout(() => {
             message.success({
               content: `Успех`,
@@ -102,6 +101,18 @@ const Login = () => {
             history.push('/');
           }, 1000);
         }
+      })
+      .catch((e) => {
+        !!e &&
+          !!e.response &&
+          e.response.data.status == 401 &&
+          setTimeout(() => {
+            message.error({
+              content: `Не правильный логин или пароль`,
+              key: 'updatable',
+              duration: 5,
+            });
+          }, 1000);
       });
   };
 

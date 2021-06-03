@@ -86,16 +86,14 @@ const BaseLayout = () => {
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
             <Switch>
               <Route exact={true} path="/" component={MainPage} />
-              <Route path="/cars" component={Cars} />
-              <Route path="/orderRepair" component={OrderRepair} />
-              <Route path="/reports" component={Reports} />
-              <Route path="/spendingService" component={ServiceSpending} />
-              <Route path="/userProfile" component={UserProfile} />
-              <Route path="/employees" component={Employees} />
-              <Route path="/clients" component={Clients} />
-              <Route path="/workTypes" component={WorkTypes} />
-              <Route exact path={'/login'} component={Login} />
-              <Route exact path={'/registration'} component={Registration} />
+              <PrivateRoute path="/cars" component={Cars} />
+              <PrivateRoute path="/orderRepair" component={OrderRepair} />
+              <PrivateRoute path="/reports" component={Reports} />
+              <PrivateRoute path="/spendingService" component={ServiceSpending} />
+              <PrivateRoute path="/userProfile" component={UserProfile} />
+              <PrivateRoute path="/employees" component={Employees} />
+              <PrivateRoute path="/clients" component={Clients} />
+              <PrivateRoute path="/workTypes" component={WorkTypes} />
               <Route exact={true} path="*" component={NotFound} />
             </Switch>
           </Content>

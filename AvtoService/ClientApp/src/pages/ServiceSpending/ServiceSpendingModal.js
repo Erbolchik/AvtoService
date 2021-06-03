@@ -36,7 +36,7 @@ export function ServiceSpendingModal({ modalProps, closeModal }) {
 
   const onUpdateServiceSpending = () => {
     updateServiceSpending(form.getFieldsValue()).then(() => {
-      message.success('Успешно добавлено', { duration: 2 });
+      message.success('Успешно обновлено', { duration: 2 });
       closeModal();
     });
   };

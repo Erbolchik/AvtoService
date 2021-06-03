@@ -23,11 +23,13 @@ namespace AvtoService.Controllers
         [HttpGet]
         public IEnumerable<Cars> GetCars()
         {
-            return _dbContext.Cars.Include(c => c.Clients).ToList();
+            return _dbContext.Cars.Include(c => c.Clients)
+                                  .ThenInclude(u => u.Users)
+                                  .ToList();
         }
 
         [HttpPost]
-        public IActionResult CreateCar(Cars cars)
+        public IActionResult CreateCar([FromBody] Cars cars)
         {
             try
             {
@@ -58,7 +60,7 @@ namespace AvtoService.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateCar(Cars updatedCar)
+        public IActionResult UpdateCar([FromBody] Cars updatedCar)
         {
             try
             {
